@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז מטלת הביצוע | יישומים גרפיים תשפ"ו</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; background: #F8FAF9; color: #0F172A; }
+        .display-font { font-family: 'Rubik', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .tab-btn.active { background: #4F46E5; color: #FFFFFF; font-weight: 700; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); }
+        .step-pill.completed { background: #10B981; color: white; }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); }
+            50% { box-shadow: 0 0 0 16px rgba(99, 102, 241, 0); }
+        }
+        .bot-fab { animation: pulse-glow 2.5s infinite; }
+        .progress-bar-fill { transition: width 0.4s ease-in-out; }
+    </style>
+</head>
+<body class="min-h-screen pb-28">
+
+    <!-- HEADER & HERO -->
+    <header class="relative bg-gradient-to-b from-indigo-900 via-indigo-800 to-slate-900 text-white pt-10 pb-20 px-4 sm:px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <!-- TOP BADGES -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+                        שאלון 791283 · תשפ"ו
+                    </span>
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-md">
+                        משקל: 30% מהבגרות
+                    </span>
+                </div>
+                <div class="text-xs text-indigo-200 font-medium">
+                    מגמת יישומים גרפיים · כיתה י'
+                </div>
+            </div>
+
+            <!-- MAIN TITLE -->
+            <div class="text-center md:text-right max-w-3xl">
+                <h1 class="display-font text-3xl sm:text-5xl font-black leading-tight tracking-tight mb-3">
+                    הבית שלך ל<span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-indigo-200">מטלת הביצוע</span>
+                </h1>
+                <p class="text-indigo-100 text-base sm:text-lg font-normal leading-relaxed opacity-90">
+                    מרכז השליטה האישי שלך: כאן מרכזים את הדרייב האישי, עוקבים אחרי התוצרים, מבינים בדיוק מה צריך להגיש ומגיעים ל-100% מוכנות לבגרות!
+                </p>
+            </div>
+
+            <!-- GOOGLE DRIVE QUICK LINK BOARD -->
+            <div class="mt-8 glass-card rounded-2xl p-5 text-slate-800 shadow-2xl border-2 border-indigo-200/50">
+                <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-bold shrink-0">
+                            📁
+                        </div>
+                        <div>
+                            <h2 class="display-font text-base font-bold text-slate-900">תיקיית ה-Google Drive האישית שלך</h2>
+                            <p class="text-xs text-slate-500 font-medium">הדבק כאן את קישור השיתוף לתיקייה בענן לשמירה וגישה מהירה</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+                        <input type="url" id="driveUrlInput" placeholder="הדבק קישור לתיקיית גוגל דרייב..." 
+                               class="w-full sm:w-80 px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dir-ltr text-right">
+                        <button onclick="saveDriveUrl()" 
+                                class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all shrink-0">
+                            שמור קישור
+                        </button>
+                        <a id="openDriveBtn" href="#" target="_blank" rel="noopener" 
+                           class="hidden w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all items-center justify-center gap-1.5 shrink-0">
+                            <span>פתוח בדרייב</span>
+                            <span class="text-xs">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 -mt-8 relative z-20">
+
+        <!-- PROGRESS STATS OVERVIEW -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-indigo-500">
+                <span class="text-xs font-bold text-slate-400 block mb-1">התקדמות כללית</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="overallPercent" class="display-font text-2xl font-black text-indigo-600">0%</span>
+                    <span class="text-xs font-semibold text-slate-500">לפי רשימת התוצרים</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2 rounded-full mt-2 overflow-hidden">
+                    <div id="overallProgressBar" class="progress-bar-fill bg-indigo-600 h-full w-0"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-teal-500">
+                <span class="text-xs font-bold text-slate-400 block mb-1">חלק החובה: מיני-פרויקט</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="miniProjectCount" class="display-font text-2xl font-black text-teal-600">0 / 5</span>
+                    <span class="text-xs font-semibold text-slate-500">70% מהציון (14 נ' כ"א)</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-2">5 תוצרים סביב נושא מרכזי אחד</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-purple-500">
+                <span class="text-xs font-bold text-slate-400 block mb-1">חלק רשות: תיק עבודות</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="portfolioCount" class="display-font text-2xl font-black text-purple-600">0 / 6</span>
+                    <span class="text-xs font-semibold text-emerald-600 font-bold">עד 20% בונוס!</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-2">6 עבודות נבחרות מהשנה</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-amber-500">
+                <span class="text-xs font-bold text-slate-400 block mb-1">מבנה המצגת והספר</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="structureCount" class="display-font text-2xl font-black text-amber-600">0 / 4</span>
+                    <span class="text-xs font-semibold text-slate-500">שער, מבוא, סיכום, מקורות</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-2">30 נקודות בסיס במחוון</p>
+            </div>
+        </div>
+
+        <!-- NAVIGATION TABS -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+            <button onclick="switchTab('checklists')" id="tab-checklists" class="tab-btn active px-5 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0">
+                📋 מעקב תוצרים וצ'קליסט
+            </button>
+            <button onclick="switchTab('structure')" id="tab-structure" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0">
+                📖 מבנה המצגת/ספר פרויקט
+            </button>
+            <button onclick="switchTab('ideas')" id="tab-ideas" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0">
+                💡 רעיונות והשראה לתוצרים
+            </button>
+            <button onclick="switchTab('rubric')" id="tab-rubric" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-2.5 rounded-xl text-sm font-bold transition-all shrink-0">
+                📊 מחוון וחלוקת הניקוד
+            </button>
+        </div>
+
+        <!-- TAB CONTENT 1: CHECKLISTS & TRACKER -->
+        <div id="content-checklists" class="tab-content space-y-6">
+            
+            <!-- SECTION 1: MINI PROJECT (5 REQUIRED) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 mb-6 gap-2">
+                    <div>
+                        <span class="bg-indigo-100 text-indigo-700 font-extrabold text-xs px-2.5 py-1 rounded-md mb-2 inline-block">חלק החובה (70 נקודות)</span>
+                        <h3 class="display-font text-xl font-bold text-slate-900">5 תוצרי המיני-פרויקט האישי</h3>
+                        <p class="text-xs text-slate-500">כל התוצרים עוסקים בנושא מרכזי אחד. לכל תוצר נדרשים 2 שקפים במצגת!</p>
+                    </div>
+                    <div class="text-xs font-bold text-slate-600 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 self-start md:self-auto">
+                        14 נקודות לכל תוצר מושלם
+                    </div>
+                </div>
+
+                <div class="space-y-4" id="miniProjectList">
+                    <!-- Dynamic rendering via JS for 5 items -->
+                </div>
+            </div>
+
+            <!-- SECTION 2: PORTFOLIO BONUS (6 REQUIRED FOR BONUS) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 mb-6 gap-2">
+                    <div>
+                        <span class="bg-purple-100 text-purple-700 font-extrabold text-xs px-2.5 py-1 rounded-md mb-2 inline-block">חלק הבונוס (עד +20% לציון!)</span>
+                        <h3 class="display-font text-xl font-bold text-slate-900">תיק עבודות (Portfolio) - 6 עבודות נבחרות מהשנה</h3>
+                        <p class="text-xs text-slate-500">עבודות מגוונות מפוטושופ ואילוסטרייטור שאינן קשורות לנושא המיני-פרויקט.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="portfolioList">
+                    <!-- Dynamic rendering via JS for 6 items -->
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB CONTENT 2: STRUCTURE & REQUIREMENTS -->
+        <div id="content-structure" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-xl font-bold text-slate-900 mb-2">מבנה המצגת / ספר הפרויקט הדיגיטלי (PDF)</h3>
+                <p class="text-sm text-slate-600 mb-6">ניתן לעצב ב-PowerPoint, Canva, או Google Slides/Docs ולהמיר ל-PDF להגשה final.</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ITEM 1 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">1</span>
+                            <h4 class="display-font font-bold text-slate-900">שקופית שער מעוצבת</h4>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li>לוגואים: משרד החינוך + לוגו בית הספר.</li>
+                            <li>שם המגמה: תקשוב (יישומים גרפיים).</li>
+                            <li>כותרת הפרויקט + לוגו מותאם שהתלמיד עיצב.</li>
+                            <li>פרטים: שם, ת.ז, כיתה, שם בית הספר, סמל מוסד, שם המורה ושנת תשפ"ו.</li>
+                        </ul>
+                    </div>
+
+                    <!-- ITEM 2 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">2</span>
+                            <h4 class="display-font font-bold text-slate-900">מבוא (5 שורות ומעלה / עד עמוד)</h4>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li><strong>הקדמה:</strong> מדוע בחרת בנושא הזה?</li>
+                            <li><strong>רקע:</strong> השלכות חברתיות, סביבתיות או אישיות.</li>
+                            <li><strong>מטרות וחשיבות:</strong> לאן הפרויקט מקדם אותך?</li>
+                            <li><strong>מבנה העבודה:</strong> תיאור קצר של הפרקים בעבודה.</li>
+                        </ul>
+                    </div>
+
+                    <!-- ITEM 3 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">3</span>
+                            <h4 class="display-font font-bold text-slate-900">מבנה 2 שקפים לכל תוצר</h4>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li><strong>שקף תוצר סופי:</strong> תמונה נקייה בגודל מלא (ללא עיוות פרופורציות), חומרי גלם מקוריים, ושם הכלי/פרומפטים אם שולבה בינה מלאכותית (AI).</li>
+                            <li><strong>שקף תיעוד ותהליך:</strong> שם התוצר, לוגו התוכנות (Photoshop, Illustrator וכו'), פירוט שלבי עבודה, צילומי מסך של כלים מכלי החיתוך, וקישור לתיקיית Google Drive.</li>
+                        </ul>
+                    </div>
+
+                    <!-- ITEM 4 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-xs">4</span>
+                            <h4 class="display-font font-bold text-slate-900">חלקים מסכמים בסוף</h4>
+                        </div>
+                        <ul class="text-xs text-slate-600 space-y-1.5 list-disc list-inside">
+                            <li><strong>סיכום ורפלקציה:</strong> נקודת מבט אישית על הלמידה והתהליך בשנה זו.</li>
+                            <li><strong>תודות:</strong> הבעת הערכה למורים ולמלווים.</li>
+                            <li><strong>ביבליוגרפיה:</strong> רשימת קישורים ומקורות (אתרי תמונות, מחוללי AI, הדרכות).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 3: IDEAS -->
+        <div id="content-ideas" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-xl font-bold text-slate-900 mb-2">רעיונות מעוררי השראה למיני-פרויקט</h3>
+                <p class="text-sm text-slate-600 mb-6">בחר נושא מרכזי שאתה אוהב וצור סביבו סדרה של 5 תוצרים גרפיים משמעותיים:</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl border border-indigo-100 bg-indigo-50/50 hover:bg-indigo-50 transition-colors">
+                        <span class="text-2xl mb-2 block">🃏</span>
+                        <h4 class="font-bold text-sm text-indigo-950 mb-1">ערכת משחק קלפים</h4>
+                        <p class="text-xs text-slate-600">סדרת קלפים ממותגת, דף הוראות הפעלה ועיצוב אריזת קופסה.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-teal-100 bg-teal-50/50 hover:bg-teal-50 transition-colors">
+                        <span class="text-2xl mb-2 block">🖼️</span>
+                        <h4 class="font-bold text-sm text-teal-950 mb-1">סדרת פוסטרים חברתיים</h4>
+                        <p class="text-xs text-slate-600">כרזות בנושאי איכות הסביבה, קיימות, מדע בדיוני, או סובלנות.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-purple-100 bg-purple-50/50 hover:bg-purple-50 transition-colors">
+                        <span class="text-2xl mb-2 block">🐉</span>
+                        <h4 class="font-bold text-sm text-purple-950 mb-1">פוטומניפולציות ופנטזיה</h4>
+                        <p class="text-xs text-slate-600">שילוב חיות פנטזיה, פוטומונטאז' תלת-ממדי או סיפור בעלילה ויזואלית.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-amber-100 bg-amber-50/50 hover:bg-amber-50 transition-colors">
+                        <span class="text-2xl mb-2 block">📐</span>
+                        <h4 class="font-bold text-sm text-amber-950 mb-1">איורים גיאומטריים / תלת ממד</h4>
+                        <p class="text-xs text-slate-600">סדרת חיות גיאומטריות באילוסטרייטור או אובייקטים בכלי 3D Effects.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-rose-100 bg-rose-50/50 hover:bg-rose-50 transition-colors">
+                        <span class="text-2xl mb-2 block">🎉</span>
+                        <h4 class="font-bold text-sm text-rose-950 mb-1">סדרת ברכות וגלויות</h4>
+                        <p class="text-xs text-slate-600">שילוב רקעי AI, עריכה בפוטושופ וטיפוגרפיה מעוצבת באילוסטרייטור/קנבה.</p>
+                    </div>
+
+                    <div class="p-4 rounded-xl border border-sky-100 bg-sky-50/50 hover:bg-sky-50 transition-colors">
+                        <span class="text-2xl mb-2 block">📱</span>
+                        <h4 class="font-bold text-sm text-sky-950 mb-1">ממשק אפליקציה (UX/UI)</h4>
+                        <p class="text-xs text-slate-600">עיצוב מסכים, דף עסקי למותג, תמונות נושא ופוסטים לרשתות.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 4: RUBRIC -->
+        <div id="content-rubric" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-xl font-bold text-slate-900 mb-2">מחוון ההערכה הרשמי (100% + 20% בונוס)</h3>
+                <p class="text-sm text-slate-600 mb-6">כך המורה יעריך את המצגת והתוצרים שלך:</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 text-xs font-bold border-b border-slate-200">
+                                <th class="p-3">רכיב במטלת הביצוע</th>
+                                <th class="p-3">פירוט ודרישות</th>
+                                <th class="p-3 w-28 text-center">ניקוד מירבי</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-xs text-slate-700 divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-3 font-bold text-indigo-700">5 תוצרי המיני-פרויקט</td>
+                                <td class="p-3">14 נקודות לכל תוצר (הצגה נקייה, תיעוד כלים, צילומי מסך, קישור דרייב)</td>
+                                <td class="p-3 font-extrabold text-center text-indigo-600">70 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">חלק המבוא</td>
+                                <td class="p-3">הקדמה, רקע, מטרות וחשיבות, תיאור מבנה העבודה</td>
+                                <td class="p-3 font-extrabold text-center">8 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">סיכום ורפלקציה</td>
+                                <td class="p-3">רפלקציה אישית על הלמידה והחוויה בשנה זו</td>
+                                <td class="p-3 font-extrabold text-center">6 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">ביבליוגרפיה ומקורות</td>
+                                <td class="p-3">רשימת קישורים, מחוללי AI, הדרכות ואתרי תמונות</td>
+                                <td class="p-3 font-extrabold text-center">6 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-3 font-bold">התרשמות כללית</td>
+                                <td class="p-3">עיצוב המצגת, יצירתיות, שמירה על פרופורציות ואסתטיקה</td>
+                                <td class="p-3 font-extrabold text-center">10 נקודות</td>
+                            </tr>
+                            <tr class="bg-purple-50/60 font-bold text-purple-900">
+                                <td class="p-3">בונוס: תיק עבודות</td>
+                                <td class="p-3">6 עבודות איכותיות נוספות מהשנה בליווי תיעוד מלא</td>
+                                <td class="p-3 font-extrabold text-center text-purple-600">+20% בונוס</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FLOATING BOT ASSISTANT FAB -->
+    <a href="https://gemini.google.com/gem/182jqjh6fxGeiMJ3R2si6dovgXIugR93N?usp=sharing" 
+       target="_blank" rel="noopener noreferrer"
+       style="z-index: 999999 !important;"
+       class="bot-fab group fixed bottom-6 left-6 sm:left-10 inline-flex items-center justify-center p-0.5 overflow-visible text-sm font-bold rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:text-white transition-all duration-300 shadow-2xl transform hover:scale-105">
+       
+       <span class="relative pr-5 pl-14 sm:pl-16 py-3.5 transition-all ease-in duration-75 bg-slate-900 rounded-xl text-white flex items-center gap-3 shadow-sm font-black text-sm sm:text-base">
+         
+         <!-- AVATAR CIRCLE -->
+         <span class="absolute -left-6 top-1/2 -translate-y-1/2 block w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-xl border-2 border-white z-[1000000] transition duration-300 transform group-hover:scale-110">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="טוביה הבוט" class="w-full h-full object-cover">
+         </span>
+
+         <!-- TEXT CONTAINER -->
+         <span class="text-right leading-tight block mr-1">
+           <span class="block text-white font-extrabold">שואלים את טוביה הבוט 🤖</span>
+           <span class="block text-[11px] font-medium text-indigo-200">עזרה במטלת הביצוע ב-Gemini</span>
+         </span>
+         
+       </span>
+    </a>
+
+    <!-- SCRIPT FOR DYNAMIC FUNCTIONALITY AND LOCAL STORAGE SAVE -->
+    <script>
+        const STORAGE_KEY_DRIVE = 'student_drive_url_task791283';
+        const STORAGE_KEY_PROGRESS = 'student_task_progress_791283';
+
+        // Load Saved Drive URL
+        function initDriveUrl() {
+            const savedUrl = localStorage.getItem(STORAGE_KEY_DRIVE);
+            const input = document.getElementById('driveUrlInput');
+            const btn = document.getElementById('openDriveBtn');
+            if (savedUrl) {
+                input.value = savedUrl;
+                btn.href = savedUrl;
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
+        }
+
+        function saveDriveUrl() {
+            const input = document.getElementById('driveUrlInput');
+            const url = input.value.trim();
+            const btn = document.getElementById('openDriveBtn');
+            if (url) {
+                localStorage.setItem(STORAGE_KEY_DRIVE, url);
+                btn.href = url;
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+                alert('הקישור לתיקיית הגוגל דרייב שמור בהצלחה במחשב זה! 🎉');
+            } else {
+                localStorage.removeItem(STORAGE_KEY_DRIVE);
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
+        }
+
+        // Render Checklists Dynamically
+        function renderChecklists() {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY_PROGRESS) || '{}');
+
+            // Render 5 Mini Project Items
+            const miniContainer = document.getElementById('miniProjectList');
+            let miniHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const checkedFinal = savedData[`mini_${i}_final`] ? 'checked' : '';
+                const checkedDoc = savedData[`mini_${i}_doc`] ? 'checked' : '';
+                const checkedDrive = savedData[`mini_${i}_drive`] ? 'checked' : '';
+
+                miniHtml += `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-md bg-indigo-600 text-white font-bold text-xs flex items-center justify-center">${i}</span>
+                                <h4 class="font-bold text-sm text-slate-900">תוצר ${i} במיני-פרויקט</h4>
+                            </div>
+                            <input type="text" placeholder="שם/תיאור התוצר (למשל: כרזה בנושא סביבה)" 
+                                   id="input_mini_${i}_name" value="${savedData[`mini_${i}_name`] || ''}"
+                                   onchange="saveProgress()"
+                                   class="text-xs px-3 py-1.5 rounded-lg border border-slate-300 w-full sm:w-64 bg-white">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 border-t border-slate-200/60 text-xs">
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="mini_${i}_final" ${checkedFinal} onchange="saveProgress()" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>שקף תוצר סופי + חומרי גלם</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="mini_${i}_doc" ${checkedDoc} onchange="saveProgress()" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>שקף תיעוד כלים וצילומי מסך</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer">
+                                <input type="checkbox" id="mini_${i}_drive" ${checkedDrive} onchange="saveProgress()" class="rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>קובץ פתוח שמור בדרייב</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+            }
+            miniContainer.innerHTML = miniHtml;
+
+            // Render 6 Portfolio Items
+            const portContainer = document.getElementById('portfolioList');
+            let portHtml = '';
+            for (let i = 1; i <= 6; i++) {
+                const checked = savedData[`port_${i}`] ? 'checked' : '';
+                portHtml += `
+                    <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2 w-full">
+                            <input type="checkbox" id="port_${i}" ${checked} onchange="saveProgress()" class="rounded text-purple-600 focus:ring-purple-500">
+                            <span class="text-xs font-bold text-slate-700 shrink-0">עבודה ${i}:</span>
+                            <input type="text" placeholder="שם העבודה מהכיתה..." 
+                                   id="input_port_${i}_name" value="${savedData[`port_${i}_name`] || ''}"
+                                   onchange="saveProgress()"
+                                   class="text-xs px-2.5 py-1 rounded-lg border border-slate-300 w-full bg-white">
+                        </div>
+                    </div>
+                `;
+            }
+            portContainer.innerHTML = portHtml;
+
+            calculateStats();
+        }
+
+        function saveProgress() {
+            const data = {};
+            // Mini project inputs
+            for (let i = 1; i <= 5; i++) {
+                data[`mini_${i}_name`] = document.getElementById(`input_mini_${i}_name`).value;
+                data[`mini_${i}_final`] = document.getElementById(`mini_${i}_final`).checked;
+                data[`mini_${i}_doc`] = document.getElementById(`mini_${i}_doc`).checked;
+                data[`mini_${i}_drive`] = document.getElementById(`mini_${i}_drive`).checked;
+            }
+            // Portfolio inputs
+            for (let i = 1; i <= 6; i++) {
+                data[`port_${i}_name`] = document.getElementById(`input_port_${i}_name`).value;
+                data[`port_${i}`] = document.getElementById(`port_${i}`).checked;
+            }
+
+            localStorage.setItem(STORAGE_KEY_PROGRESS, JSON.stringify(data));
+            calculateStats();
+        }
+
+        function calculateStats() {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY_PROGRESS) || '{}');
+            
+            // Mini project items check
+            let miniDone = 0;
+            for (let i = 1; i <= 5; i++) {
+                if (savedData[`mini_${i}_final`] && savedData[`mini_${i}_doc`] && savedData[`mini_${i}_drive`]) {
+                    miniDone++;
+                }
+            }
+            document.getElementById('miniProjectCount').innerText = `${miniDone} / 5`;
+
+            // Portfolio items check
+            let portDone = 0;
+            for (let i = 1; i <= 6; i++) {
+                if (savedData[`port_${i}`]) {
+                    portDone++;
+                }
+            }
+            document.getElementById('portfolioCount').innerText = `${portDone} / 6`;
+
+            // Overall percent based on 5 mini project items (each 20%)
+            const totalPercent = Math.round((miniDone / 5) * 100);
+            document.getElementById('overallPercent').innerText = `${totalPercent}%`;
+            document.getElementById('overallProgressBar').style.width = `${totalPercent}%`;
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.remove('bg-white', 'text-slate-700');
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            initDriveUrl();
+            renderChecklists();
+        };
+    </script>
+</body>
+</html>
