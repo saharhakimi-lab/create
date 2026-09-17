@@ -1,243 +1,738 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מוצאים כיוון | שיעור פתיחה למטלת הביצוע</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;700;800;900&family=Assistant:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-  body { font-family: 'Assistant', sans-serif; background: #F6F4FD; color: #1B1B2F; }
-  .display { font-family: 'Rubik', sans-serif; }
-  @keyframes tuvia-glow {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(91, 95, 239, 0.55); }
-    50% { box-shadow: 0 0 0 14px rgba(91, 95, 239, 0); }
-  }
-  .tuvia-fab { animation: tuvia-glow 2.2s infinite; }
-  .station { scroll-margin-top: 20px; }
-  input[type="radio"] { display: none; }
-  .swatch-label { cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
-  input[type="radio"]:checked + .swatch-label { box-shadow: 0 0 0 3px #fff, 0 0 0 6px currentColor; transform: translateY(-2px); }
-  textarea, input[type="text"] {
-    font-family: 'Assistant', sans-serif;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מרכז מטלת הביצוע | יישומים גרפיים תשפ"ו</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=Assistant:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Assistant', sans-serif; background: #F8FAF9; color: #0F172A; }
+        .display-font { font-family: 'Rubik', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(226, 232, 240, 0.8); }
+        .tab-btn.active { background: #4F46E5; color: #FFFFFF; font-weight: 700; box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3); }
+        .step-pill.completed { background: #10B981; color: white; }
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.6); }
+            50% { box-shadow: 0 0 0 16px rgba(99, 102, 241, 0); }
+        }
+        .bot-fab { animation: pulse-glow 2.5s infinite; }
+        .progress-bar-fill { transition: width 0.4s ease-in-out; }
+    </style>
 </head>
-<body class="min-h-screen pb-20">
+<body class="min-h-screen pb-28">
 
-  <!-- Toviya Bot Floating Button -->
-  <a href="https://gemini.google.com/gem/182jqjh6fxGeiMJ3R2si6dovgXIugR93N?usp=sharing" target="_blank" rel="noopener"
-     class="tuvia-fab fixed bottom-6 left-6 z-50 flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-bold px-5 py-4 rounded-full shadow-2xl transition duration-300 transform hover:scale-105">
-    <span class="text-2xl">🤖</span>
-    <span class="text-sm md:text-base">תקוע/ה? דבר עם טוביה - הבוט שמלווה אותך במשימה</span>
-  </a>
+    <!-- HEADER & HERO -->
+    <header class="relative bg-gradient-to-b from-indigo-900 via-indigo-800 to-slate-900 text-white pt-10 pb-20 px-4 sm:px-6 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+        
+        <div class="max-w-6xl mx-auto relative z-10">
+            <!-- TOP BADGES -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-6">
+                <div class="flex items-center gap-2">
+                    <span class="bg-indigo-500/30 text-indigo-200 border border-indigo-400/30 text-sm font-bold px-3.5 py-1 rounded-full backdrop-blur-md">
+                        שאלון 791283 · תשפ"ו
+                    </span>
+                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 text-sm font-bold px-3.5 py-1 rounded-full backdrop-blur-md">
+                        משקל: 30% מהבגרות
+                    </span>
+                </div>
+                <div class="text-sm text-indigo-200 font-medium">
+                    מגמת יישומים גרפיים · כיתה י'
+                </div>
+            </div>
 
-  <!-- HERO -->
-  <header class="max-w-4xl mx-auto px-5 pt-10 pb-6">
-    <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
-      <span class="display font-black text-sm px-4 py-1.5 rounded-full bg-white shadow-sm border border-indigo-100 text-indigo-600">מגמת יישומים גרפיים · כיתה י' · שיעור פתיחה</span>
-      <a href="https://gemini.google.com/gem/182jqjh6fxGeiMJ3R2si6dovgXIugR93N?usp=sharing" target="_blank" rel="noopener"
-         class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-fuchsia-600 hover:from-indigo-500 hover:to-fuchsia-500 text-white font-black px-5 py-2.5 rounded-full shadow-lg transition-all transform hover:scale-105">
-        <span>🤖</span><span>שאל את טוביה</span>
-      </a>
-    </div>
-    <h1 class="display font-black text-4xl sm:text-5xl leading-tight mb-4">מוצאים <span class="text-indigo-600">כיוון</span> לפני שמתחילים</h1>
-    <p class="text-lg text-stone-700 font-semibold max-w-2xl">
-      כל מטלת הביצוע שלך תסתובב סביב "חברה" או נושא אחד שאתה בונה ממנו לפחות 5 תוצרים. היום לא נוגעים בפוטושופ בכלל - היום עוברים <strong>6 תחנות חשיבה</strong>, אחת אחרי השנייה, עד שתדע בדיוק במה אתה עוסק ומה כיוון הלוגו שלך. בסוף השיעור תקבל תקציר קצר שתוכל להעתיק ולתת לטוביה כשתתחיל לבנות תוצרים.
-    </p>
-  </header>
+            <!-- MAIN TITLE WITH IMAGE ON RIGHT -->
+            <div class="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+                <!-- IMAGE ON RIGHT -->
+                <div class="shrink-0 order-1 md:order-1">
+                    <a href="https://drive.google.com/file/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb/view?usp=sharing" target="_blank" rel="noopener">
+                        <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" 
+                             alt="תמונה מטורללת" 
+                             class="w-28 h-28 sm:w-36 sm:h-36 object-cover rounded-2xl shadow-2xl border-4 border-indigo-400/40 transform -rotate-3 hover:rotate-0 hover:scale-105 transition-all duration-300">
+                    </a>
+                </div>
 
-  <!-- PROGRESS -->
-  <div class="max-w-4xl mx-auto px-5 mb-8 flex gap-2" id="progress-dots">
-    <div class="h-2 flex-1 rounded-full bg-rose-200" data-dot="1"></div>
-    <div class="h-2 flex-1 rounded-full bg-amber-200" data-dot="2"></div>
-    <div class="h-2 flex-1 rounded-full bg-teal-200" data-dot="3"></div>
-    <div class="h-2 flex-1 rounded-full bg-indigo-200" data-dot="4"></div>
-    <div class="h-2 flex-1 rounded-full bg-fuchsia-200" data-dot="5"></div>
-    <div class="h-2 flex-1 rounded-full bg-emerald-200" data-dot="6"></div>
-  </div>
+                <!-- TEXT CONTENT -->
+                <div class="text-center md:text-right max-w-3xl order-2 md:order-2">
+                    <h1 class="display-font text-3xl sm:text-5xl font-black leading-tight tracking-tight mb-3">
+                        הבית שלך ל<span class="text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-indigo-200">מטלת הביצוע</span>
+                    </h1>
+                    <p class="text-indigo-100 text-base sm:text-xl font-normal leading-relaxed opacity-90">
+                        מרכז השליטה האישי שלך: כאן מרכזים את הדרייב האישי, עוקבים אחרי התוצרים, מבינים בדיוק מה צריך להגיש ומגיעים ל-100% מוכנות לבגרות!
+                    </p>
+                </div>
+            </div>
 
-  <main class="max-w-4xl mx-auto px-5 space-y-8">
+            <!-- NEW QUICK TOOL BOX: DIGITAL STUDIO / LOGO TOOL -->
+            <div class="mt-8 glass-card rounded-2xl p-5 text-slate-800 shadow-2xl border-2 border-teal-300/40 bg-gradient-to-r from-teal-900/40 to-indigo-900/40 backdrop-blur-md">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-teal-400/20 text-teal-300 flex items-center justify-center text-2xl font-bold shrink-0 border border-teal-400/30">
+                            🎨
+                        </div>
+                        <div class="text-right">
+                            <h2 class="display-font text-lg font-bold text-white">מחולל סטודיו לוגואים ותוצרים</h2>
+                            <p class="text-sm text-indigo-100 font-medium">כלי דיגיטלי ליצירה והוספת לוגואים על גבי התוצרים והעבודות שלך</p>
+                        </div>
+                    </div>
+                    
+                    <a href="https://saharhakimi-lab.github.io/digital-studio/" target="_blank" rel="noopener"
+                       class="w-full md:w-auto bg-gradient-to-r from-teal-400 to-emerald-400 hover:from-teal-300 hover:to-emerald-300 text-slate-950 font-black text-base px-6 py-3 rounded-xl shadow-lg hover:shadow-teal-400/20 transition-all flex items-center justify-center gap-2 shrink-0 transform hover:-translate-y-0.5">
+                        <span>לוגו על תוצרים</span>
+                        <span class="text-lg">✨</span>
+                    </a>
+                </div>
+            </div>
 
-    <!-- STATION 1 -->
-    <section class="station bg-white rounded-3xl p-6 sm:p-8 shadow-md border-r-8 border-rose-400">
-      <span class="display font-black text-xs text-rose-500">תחנה 1</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">מה באמת מעניין אותך?</h2>
-      <p class="text-stone-700 font-semibold mb-4">שכח לרגע מ"מה יעבוד טוב לפרויקט" - תחשוב רק על מה שאתה. תחביב, סדרה, ספורט, משחק, נושא חברתי, מוזיקה, אוכל, כל דבר. אין תשובה גרועה.</p>
-      <textarea data-field="interests" rows="3" placeholder="כתוב כאן 3-5 דברים שמעניינים אותך, גם אם הם נראים לא קשורים לגרפיקה..."
-        class="w-full rounded-xl border-2 border-rose-100 focus:border-rose-400 outline-hidden p-4 font-semibold text-stone-800"></textarea>
-    </section>
-
-    <!-- STATION 2 -->
-    <section class="station bg-white rounded-3xl p-6 sm:p-8 shadow-md border-r-8 border-amber-400">
-      <span class="display font-black text-xs text-amber-500">תחנה 2</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">מהעניין שלך - לסוג פרויקט</h2>
-      <p class="text-stone-700 font-semibold mb-4">כל נושא אפשר "לתרגם" לכמה סוגי תוצרים שונים. איזה כיוון הכי מדבר אליך?</p>
-      <div class="grid sm:grid-cols-2 gap-3" data-radio-group="direction">
-        <div><input type="radio" name="direction" id="d1" value="מוצר / משחק (למשל: משחק קלפים, אריזה, לוח משחק)"><label for="d1" class="swatch-label block p-4 rounded-xl border-2 border-amber-100 text-amber-700 font-bold text-sm">🎲 מוצר / משחק<br><span class="font-normal text-xs text-stone-500">משחק קלפים, אריזה, לוח משחק</span></label></div>
-        <div><input type="radio" name="direction" id="d2" value="סדרה עונתית (למשל: ברכות לחג, קמפיין לאירוע חוזר)"><label for="d2" class="swatch-label block p-4 rounded-xl border-2 border-amber-100 text-amber-700 font-bold text-sm">🎉 סדרה עונתית<br><span class="font-normal text-xs text-stone-500">ברכות לחג, קמפיין לאירוע</span></label></div>
-        <div><input type="radio" name="direction" id="d3" value="קמפיין חברתי-ערכי (סדרת פוסטרים בנושא שחשוב לי)"><label for="d3" class="swatch-label block p-4 rounded-xl border-2 border-amber-100 text-amber-700 font-bold text-sm">📢 קמפיין חברתי-ערכי<br><span class="font-normal text-xs text-stone-500">סדרת פוסטרים בנושא שחשוב לי</span></label></div>
-        <div><input type="radio" name="direction" id="d4" value="עולם ויזואלי / קולאז' (המבוסס גם על AI)"><label for="d4" class="swatch-label block p-4 rounded-xl border-2 border-amber-100 text-amber-700 font-bold text-sm">🌌 עולם ויזואלי / קולאז'<br><span class="font-normal text-xs text-stone-500">כולל שימוש בכלי AI</span></label></div>
-      </div>
-    </section>
-
-    <!-- STATION 3 -->
-    <section class="station bg-white rounded-3xl p-6 sm:p-8 shadow-md border-r-8 border-teal-400">
-      <span class="display font-black text-xs text-teal-500">תחנה 3</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">נותנים לזה שם וזהות</h2>
-      <p class="text-stone-700 font-semibold mb-4">עכשיו הפרויקט שלך צריך שם - כמו מותג. זה יכול להיות שם דמיוני, כותרת לסדרה, או שם "עסק".</p>
-      <div class="grid sm:grid-cols-2 gap-4">
-        <div>
-          <label class="text-xs font-black text-teal-600 mb-1 block">השם שבחרתי</label>
-          <input type="text" data-field="brandName" placeholder="למשל: 'לילה טוב' / 'PixelPets'"
-            class="w-full rounded-xl border-2 border-teal-100 focus:border-teal-400 outline-hidden p-3 font-bold text-stone-800">
+            <!-- GOOGLE DRIVE QUICK LINK BOARD -->
+            <div class="mt-4 glass-card rounded-2xl p-5 text-slate-800 shadow-2xl border-2 border-indigo-200/50">
+                <div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-2xl font-bold shrink-0">
+                            📁
+                        </div>
+                        <div>
+                            <h2 class="display-font text-lg font-bold text-slate-900">תיקיית ה-Google Drive האישית שלך</h2>
+                            <p class="text-sm text-slate-500 font-medium">הדבק כאן את קישור השיתוף לתיקייה בענן לשמירה וגישה מהירה</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row items-center gap-2 w-full md:w-auto">
+                        <input type="url" id="driveUrlInput" placeholder="הדבק קישור לתיקיית גוגל דרייב..." 
+                               class="w-full sm:w-80 px-4 py-2.5 rounded-xl border border-slate-300 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-800 dir-ltr text-right">
+                        <button onclick="saveDriveUrl()" 
+                                class="w-full sm:w-auto bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all shrink-0">
+                            שמור קישור
+                        </button>
+                        <a id="openDriveBtn" href="#" target="_blank" rel="noopener" 
+                           class="hidden w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm px-5 py-2.5 rounded-xl shadow-md transition-all items-center justify-center gap-1.5 shrink-0">
+                            <span>פתוח בדרייב</span>
+                            <span class="text-xs">↗</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <label class="text-xs font-black text-teal-600 mb-1 block">למי זה מיועד ואיזו תחושה זה ייתן</label>
-          <input type="text" data-field="audience" placeholder="למשל: 'בני נוער, תחושה אנרגטית וצבעונית'"
-            class="w-full rounded-xl border-2 border-teal-100 focus:border-teal-400 outline-hidden p-3 font-bold text-stone-800">
+    </header>
+
+    <!-- MAIN DASHBOARD CONTENT -->
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 -mt-8 relative z-20">
+
+        <!-- PROGRESS STATS OVERVIEW -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-indigo-500">
+                <span class="text-sm font-bold text-slate-500 block mb-1">התקדמות כללית</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="overallPercent" class="display-font text-3xl font-black text-indigo-600">0%</span>
+                    <span class="text-sm font-semibold text-slate-500">לפי רשימת התוצרים</span>
+                </div>
+                <div class="w-full bg-slate-200 h-2.5 rounded-full mt-2 overflow-hidden">
+                    <div id="overallProgressBar" class="progress-bar-fill bg-indigo-600 h-full w-0"></div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-teal-500">
+                <span class="text-sm font-bold text-slate-500 block mb-1">חלק החובה: מיני-פרויקט</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="miniProjectCount" class="display-font text-3xl font-black text-teal-600">0 / 5</span>
+                    <span class="text-sm font-semibold text-slate-600">70% מהציון (14 נ' כ"א)</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">5 תוצרים סביב נושא מרכזי אחד</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-purple-500">
+                <span class="text-sm font-bold text-slate-500 block mb-1">חלק רשות: תיק עבודות</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="portfolioCount" class="display-font text-3xl font-black text-purple-600">0 / 6</span>
+                    <span class="text-sm font-bold text-emerald-600">עד 20% בונוס!</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">6 עבודות נבחרות מהשנה</p>
+            </div>
+
+            <div class="glass-card rounded-2xl p-4 shadow-sm border-r-4 border-r-amber-500">
+                <span class="text-sm font-bold text-slate-500 block mb-1">מבנה המצגת והספר</span>
+                <div class="flex items-baseline justify-between">
+                    <span id="structureCount" class="display-font text-3xl font-black text-amber-600">0 / 4</span>
+                    <span class="text-sm font-semibold text-slate-600">שער, מבוא, סיכום, מקורות</span>
+                </div>
+                <p class="text-xs text-slate-500 mt-2">30 נקודות בסיס במחוון</p>
+            </div>
         </div>
-      </div>
-    </section>
 
-    <!-- STATION 4 -->
-    <section class="station bg-white rounded-3xl p-6 sm:p-8 shadow-md border-r-8 border-indigo-400">
-      <span class="display font-black text-xs text-indigo-500">תחנה 4</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">איזה עולם צבעים מתאים?</h2>
-      <p class="text-stone-700 font-semibold mb-4">צבע הוא הרושם הראשון שכל אחד מקבל מהפרויקט שלך, עוד לפני שהוא קרא מילה. בחר את הכיוון שהכי מרגיש נכון.</p>
-      <div class="grid sm:grid-cols-2 gap-3" data-radio-group="colorMood">
-        <div><input type="radio" name="colorMood" id="c1" value="חם ואנרגטי (אדום, כתום, צהוב)"><label for="c1" class="swatch-label block p-4 rounded-xl border-2 border-indigo-100 font-bold text-sm text-stone-700" style="color:#E85D4C"><span class="inline-block w-4 h-4 rounded-full bg-linear-to-r from-red-500 to-amber-400 align-middle ml-1"></span> חם ואנרגטי<br><span class="font-normal text-xs text-stone-500">אדום · כתום · צהוב</span></label></div>
-        <div><input type="radio" name="colorMood" id="c2" value="קריר ורגוע (כחול, טורקיז, סגול)"><label for="c2" class="swatch-label block p-4 rounded-xl border-2 border-indigo-100 font-bold text-sm text-stone-700" style="color:#4C6FE8"><span class="inline-block w-4 h-4 rounded-full bg-linear-to-r from-blue-500 to-teal-400 align-middle ml-1"></span> קריר ורגוע<br><span class="font-normal text-xs text-stone-500">כחול · טורקיז · סגול</span></label></div>
-        <div><input type="radio" name="colorMood" id="c3" value="טבעי ואדמתי (ירוק, חום, בז')"><label for="c3" class="swatch-label block p-4 rounded-xl border-2 border-indigo-100 font-bold text-sm text-stone-700" style="color:#4C8C4A"><span class="inline-block w-4 h-4 rounded-full bg-linear-to-r from-green-600 to-yellow-700 align-middle ml-1"></span> טבעי ואדמתי<br><span class="font-normal text-xs text-stone-500">ירוק · חום · בז'</span></label></div>
-        <div><input type="radio" name="colorMood" id="c4" value="נועז וניגודי (שחור, לבן, צבע זרחני אחד)"><label for="c4" class="swatch-label block p-4 rounded-xl border-2 border-indigo-100 font-bold text-sm text-stone-700" style="color:#1B1B2F"><span class="inline-block w-4 h-4 rounded-full bg-linear-to-r from-stone-900 to-fuchsia-500 align-middle ml-1"></span> נועז וניגודי<br><span class="font-normal text-xs text-stone-500">שחור · לבן · צבע זרחני אחד</span></label></div>
-      </div>
-    </section>
+        <!-- NAVIGATION TABS -->
+        <div class="flex items-center gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none">
+            <button onclick="switchTab('checklists')" id="tab-checklists" class="tab-btn active px-5 py-3 rounded-xl text-base font-bold transition-all shrink-0">
+                📋 מעקב תוצרים וצ'קליסט
+            </button>
+            <button onclick="switchTab('structure')" id="tab-structure" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-3 rounded-xl text-base font-bold transition-all shrink-0">
+                📖 מבנה המצגת/ספר פרויקט
+            </button>
+            <button onclick="switchTab('ideas')" id="tab-ideas" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-3 rounded-xl text-base font-bold transition-all shrink-0">
+                💡 רעיונות והשראה לתוצרים
+            </button>
+            <button onclick="switchTab('rubric')" id="tab-rubric" class="tab-btn bg-white text-slate-700 hover:bg-slate-100 px-5 py-3 rounded-xl text-base font-bold transition-all shrink-0">
+                📊 מחוון וחלוקת הניקוד
+            </button>
+        </div>
 
-    <!-- STATION 5 -->
-    <section class="station bg-white rounded-3xl p-6 sm:p-8 shadow-md border-r-8 border-fuchsia-400">
-      <span class="display font-black text-xs text-fuchsia-500">תחנה 5</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">כיוון ראשוני ללוגו</h2>
-      <p class="text-stone-700 font-semibold mb-4">עדיין לא מציירים - רק מחליטים כיוון. שני החלטות קטנות שיחסכו לך המון זמן כשתשב בפוטושופ/אילוסטרייטור.</p>
-      <div class="grid sm:grid-cols-2 gap-3 mb-4" data-radio-group="logoType">
-        <div><input type="radio" name="logoType" id="l1" value="סמל/איקון בלבד"><label for="l1" class="swatch-label block p-4 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm">🔺 סמל / איקון בלבד</label></div>
-        <div><input type="radio" name="logoType" id="l2" value="טיפוגרפי - השם עצמו הוא הלוגו"><label for="l2" class="swatch-label block p-4 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm">🔤 טיפוגרפי - השם הוא הלוגו</label></div>
-        <div><input type="radio" name="logoType" id="l3" value="שילוב של סמל וטקסט יחד"><label for="l3" class="swatch-label block p-4 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm">🧩 שילוב סמל + טקסט</label></div>
-        <div><input type="radio" name="logoType" id="l4" value="עדיין לא בטוח, אתייעץ עם טוביה"><label for="l4" class="swatch-label block p-4 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm">🤔 עדיין לא בטוח</label></div>
-      </div>
-      <div class="grid sm:grid-cols-3 gap-3" data-radio-group="shapeFeel">
-        <div><input type="radio" name="shapeFeel" id="s1" value="עגול ורך"><label for="s1" class="swatch-label block p-3 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm text-center">⚪ עגול ורך</label></div>
-        <div><input type="radio" name="shapeFeel" id="s2" value="חד וזוויתי"><label for="s2" class="swatch-label block p-3 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm text-center">🔻 חד וזוויתי</label></div>
-        <div><input type="radio" name="shapeFeel" id="s3" value="אורגני וחופשי"><label for="s3" class="swatch-label block p-3 rounded-xl border-2 border-fuchsia-100 text-fuchsia-700 font-bold text-sm text-center">🌿 אורגני וחופשי</label></div>
-      </div>
-    </section>
+        <!-- TAB CONTENT 1: CHECKLISTS & TRACKER -->
+        <div id="content-checklists" class="tab-content space-y-6">
 
-    <!-- STATION 6 - SUMMARY -->
-    <section class="station bg-gradient-to-br from-indigo-600 to-fuchsia-600 rounded-3xl p-6 sm:p-8 shadow-xl text-white">
-      <span class="display font-black text-xs text-indigo-200">תחנה 6 · סיום</span>
-      <h2 class="display font-black text-2xl mt-1 mb-3">התקציר שלך - מוכן לטוביה</h2>
-      <p class="font-semibold mb-4 text-indigo-100">כל מה שבחרת למעלה מתקבץ כאן אוטומטית. תעתיק את הטקסט ותדביק אותו לטוביה כשתתחיל לבנות תוצרים - הוא ידע בדיוק על מה אתה עובד.</p>
-      <textarea id="summary-box" readonly rows="7"
-        class="w-full rounded-xl p-4 font-bold text-stone-800 bg-white/95 outline-hidden"></textarea>
-      <div class="flex flex-wrap gap-3 mt-4">
-        <button onclick="copySummary()" id="copy-btn"
-          class="bg-white text-indigo-700 font-black px-5 py-3 rounded-full shadow-md hover:scale-105 transition-transform">📋 העתק את התקציר</button>
-        <a href="https://gemini.google.com/gem/182jqjh6fxGeiMJ3R2si6dovgXIugR93N?usp=sharing" target="_blank" rel="noopener"
-          class="bg-stone-900 hover:bg-stone-800 text-white font-black px-5 py-3 rounded-full shadow-md transition-colors flex items-center gap-2">🤖 עבור לטוביה עם התקציר</a>
-      </div>
-    </section>
+            <!-- TOPIC SELECTOR BOARD -->
+            <div class="bg-gradient-to-r from-indigo-900 to-slate-900 text-white rounded-2xl p-6 shadow-md border border-indigo-700/50">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                        <span class="bg-amber-400 text-slate-900 font-black text-sm px-3.5 py-1 rounded-full mb-2 inline-block">צעד ראשון</span>
+                        <h3 class="display-font text-2xl font-bold text-white">בחירת נושא מרכזי למטלת הביצוע</h3>
+                        <p class="text-sm text-indigo-200 mt-1">בחר מתוך 11 הנושאים המומלצים. בחירת נושא תאכלס אוטומטית את 5 התוצרים הנדרשים!</p>
+                    </div>
 
-  </main>
+                    <div class="w-full md:w-auto flex flex-col sm:flex-row items-center gap-3">
+                        <select id="topicSelector" onchange="onTopicSelectChange()" class="w-full sm:w-80 px-4 py-2.5 rounded-xl border border-indigo-400 bg-slate-800 text-white text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-400">
+                            <option value="">-- בחר נושא מהרשימה --</option>
+                        </select>
+                        <button onclick="applySelectedTopic()" class="w-full sm:w-auto bg-teal-400 hover:bg-teal-300 text-slate-950 font-black text-sm px-5 py-2.5 rounded-xl shadow-md transition-all shrink-0">
+                            עדכן תוצרים
+                        </button>
+                    </div>
+                </div>
 
-<script>
-  const fields = document.querySelectorAll('[data-field]');
-  const radioGroups = ['direction','colorMood','logoType','shapeFeel'];
-  const STORAGE_KEY = 'lesson_company_direction';
+                <!-- DISPLAY CURRENT SELECTION SUMMARY -->
+                <div id="selectedTopicInfo" class="mt-4 pt-4 border-t border-indigo-800/80 hidden">
+                    <p class="text-sm text-teal-300 font-bold mb-1">הנושא הנבחר כרגע:</p>
+                    <p id="currentTopicTitle" class="text-lg font-extrabold text-white mb-2"></p>
+                    <div id="currentTopicProducts" class="flex flex-wrap gap-2 text-sm"></div>
+                </div>
+            </div>
+            
+            <!-- SECTION 1: MINI PROJECT (5 REQUIRED) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 mb-6 gap-2">
+                    <div>
+                        <span class="bg-indigo-100 text-indigo-700 font-extrabold text-xs px-3 py-1 rounded-md mb-2 inline-block">חלק החובה (70 נקודות)</span>
+                        <h3 class="display-font text-2xl font-bold text-slate-900">5 תוצרי המיני-פרויקט האישי</h3>
+                        <p class="text-sm text-slate-500">כל התוצרים עוסקים בנושא מרכזי אחד. לכל תוצר נדרשים 2 שקפים במצגת!</p>
+                    </div>
+                    <div class="text-sm font-bold text-slate-600 bg-slate-100 px-3.5 py-1.5 rounded-lg border border-slate-200 self-start md:self-auto">
+                        14 נקודות לכל תוצר מושלם
+                    </div>
+                </div>
 
-  function getSelected(name) {
-    const el = document.querySelector(`input[name="${name}"]:checked`);
-    return el ? el.value : null;
-  }
+                <div class="space-y-4" id="miniProjectList">
+                    <!-- Dynamic rendering via JS for 5 items -->
+                </div>
+            </div>
 
-  function buildSummary() {
-    const interests = document.querySelector('[data-field="interests"]').value.trim();
-    const brandName = document.querySelector('[data-field="brandName"]').value.trim();
-    const audience = document.querySelector('[data-field="audience"]').value.trim();
-    const direction = getSelected('direction');
-    const colorMood = getSelected('colorMood');
-    const logoType = getSelected('logoType');
-    const shapeFeel = getSelected('shapeFeel');
+            <!-- SECTION 2: PORTFOLIO BONUS (6 REQUIRED FOR BONUS) -->
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-100 mb-6 gap-2">
+                    <div>
+                        <span class="bg-purple-100 text-purple-700 font-extrabold text-xs px-3 py-1 rounded-md mb-2 inline-block">חלק הבונוס (עד +20% לציון!)</span>
+                        <h3 class="display-font text-2xl font-bold text-slate-900">תיק עבודות (Portfolio) - 6 עבודות נבחרות מהשנה</h3>
+                        <p class="text-sm text-slate-500">עבודות מגוונות מפוטושופ ואילוסטרייטור שאינן קשורות לנושא המיני-פרויקט.</p>
+                    </div>
+                </div>
 
-    let lines = [];
-    lines.push(`שלום טוביה! אני מתחיל את מטלת הביצוע. הנה התקציר שלי:`);
-    if (brandName) lines.push(`• שם הפרויקט/החברה: ${brandName}`);
-    if (direction) lines.push(`• סוג הפרויקט: ${direction}`);
-    if (audience) lines.push(`• קהל יעד ותחושה: ${audience}`);
-    if (colorMood) lines.push(`• כיוון צבעים: ${colorMood}`);
-    if (logoType) lines.push(`• כיוון הלוגו: ${logoType}`);
-    if (shapeFeel) lines.push(`• תחושת הצורות: ${shapeFeel}`);
-    if (interests) lines.push(`• דברים שמעניינים אותי בכלל: ${interests}`);
-    lines.push(`תעזור לי לתכנן את השלב הבא?`);
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="portfolioList">
+                    <!-- Dynamic rendering via JS for 6 items -->
+                </div>
+            </div>
 
-    document.getElementById('summary-box').value = lines.join('\n');
-  }
+        </div>
 
-  function copySummary() {
-    const box = document.getElementById('summary-box');
-    box.select();
-    document.execCommand('copy');
-    const btn = document.getElementById('copy-btn');
-    const original = btn.textContent;
-    btn.textContent = '✔ הועתק!';
-    setTimeout(() => btn.textContent = original, 1800);
-  }
+        <!-- TAB CONTENT 2: STRUCTURE & REQUIREMENTS -->
+        <div id="content-structure" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-2xl font-bold text-slate-900 mb-2">מבנה המצגת / ספר הפרויקט הדיגיטלי (PDF)</h3>
+                <p class="text-base text-slate-600 mb-6">ניתן לעצב ב-PowerPoint, Canva, או Google Slides/Docs ולהמיר ל-PDF להגשה סופית.</p>
 
-  function save() {
-    const state = { fields: {}, radios: {} };
-    fields.forEach(f => state.fields[f.dataset.field] = f.value);
-    radioGroups.forEach(name => state.radios[name] = getSelected(name));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    buildSummary();
-    updateProgress();
-  }
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ITEM 1 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">1</span>
+                            <h4 class="display-font text-lg font-bold text-slate-900">שקופית שער מעוצבת</h4>
+                        </div>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li>לוגואים: משרד החינוך + לוגו בית הספר.</li>
+                            <li>שם המגמה: תקשוב (יישומים גרפיים).</li>
+                            <li>כותרת הפרויקט + לוגו מותאם שהתלמיד עיצב.</li>
+                            <li>פרטים: שם, ת.ז, כיתה, שם בית הספר, סמל מוסד, שם המורה ושנת תשפ"ו.</li>
+                        </ul>
+                    </div>
 
-  function updateProgress() {
-    const dots = document.querySelectorAll('[data-dot]');
-    const doneCount = [
-      document.querySelector('[data-field="interests"]').value.trim().length > 0,
-      !!getSelected('direction'),
-      document.querySelector('[data-field="brandName"]').value.trim().length > 0,
-      !!getSelected('colorMood'),
-      !!getSelected('logoType'),
-      true
-    ];
-    dots.forEach((d,i) => d.classList.toggle('opacity-40', !doneCount[i]));
-  }
+                    <!-- ITEM 2 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">2</span>
+                            <h4 class="display-font text-lg font-bold text-slate-900">מבוא (5 שורות ומעלה / עד עמוד)</h4>
+                        </div>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>הקדמה:</strong> מדוע בחרת בנושא הזה?</li>
+                            <li><strong>רקע:</strong> השלכות חברתיות, סביבתיות או אישיות.</li>
+                            <li><strong>מטרות וחשיבות:</strong> לאן הפרויקט מקדם אותך?</li>
+                            <li><strong>מבנה העבודה:</strong> תיאור קצר של הפרקים בעבודה.</li>
+                        </ul>
+                    </div>
 
-  function load() {
-    try {
-      const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-      if (state.fields) {
-        Object.entries(state.fields).forEach(([key, val]) => {
-          const el = document.querySelector(`[data-field="${key}"]`);
-          if (el) el.value = val;
-        });
-      }
-      if (state.radios) {
-        Object.entries(state.radios).forEach(([name, val]) => {
-          if (!val) return;
-          const el = document.querySelector(`input[name="${name}"][value="${CSS.escape(val)}"]`);
-          if (el) el.checked = true;
-        });
-      }
-    } catch (e) {}
-  }
+                    <!-- ITEM 3 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">3</span>
+                            <h4 class="display-font text-lg font-bold text-slate-900">מבנה 2 שקפים לכל תוצר</h4>
+                        </div>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>שקף תוצר סופי:</strong> תמונה נקייה בגודל מלא (ללא עיוות פרופורציות), חומרי גלם מקוריים, ושם הכלי/פרומפטים אם שולבה בינה מלאכותית (AI).</li>
+                            <li><strong>שקף תיעוד ותהליך:</strong> שם התוצר, לוגו התוכנות (Photoshop, Illustrator וכו'), פירוט שלבי עבודה, צילומי מסך של כלים מכלי החיתוך, וקישור לתיקיית Google Drive.</li>
+                        </ul>
+                    </div>
 
-  fields.forEach(f => f.addEventListener('input', save));
-  document.querySelectorAll('input[type="radio"]').forEach(r => r.addEventListener('change', save));
+                    <!-- ITEM 4 -->
+                    <div class="p-5 rounded-xl bg-slate-50 border border-slate-200">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center text-sm">4</span>
+                            <h4 class="display-font text-lg font-bold text-slate-900">חלקים מסכמים בסוף</h4>
+                        </div>
+                        <ul class="text-sm text-slate-700 space-y-2 list-disc list-inside">
+                            <li><strong>סיכום ורפלקציה:</strong> נקודת מבט אישית על הלמידה והתהליך בשנה זו.</li>
+                            <li><strong>תודות:</strong> הבעת הערכה למורים ולמלווים.</li>
+                            <li><strong>ביבליוגרפיה:</strong> רשימת קישורים ומקורות (אתרי תמונות, מחוללי AI, הדרכות).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-  load();
-  buildSummary();
-  updateProgress();
-</script>
+        <!-- TAB CONTENT 3: IDEAS -->
+        <div id="content-ideas" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-2xl font-bold text-slate-900 mb-2">11 נושאים ורעיונות למטלת הביצוע</h3>
+                <p class="text-base text-slate-600 mb-6">בחר את הנושא שהכי מתאים לך! לחיצה על כפתור "בחר נושא זה" תגדיר אותו ואת 5 התוצרים שלו בצ'קליסט:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" id="topicsGrid">
+                    <!-- Dynamic rendering via JS for all 11 topics -->
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB CONTENT 4: RUBRIC -->
+        <div id="content-rubric" class="tab-content hidden space-y-6">
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+                <h3 class="display-font text-2xl font-bold text-slate-900 mb-2">מחוון ההערכה הרשמי (100% + 20% בונוס)</h3>
+                <p class="text-base text-slate-600 mb-6">כך המורה יעריך את המצגת והתוצרים שלך:</p>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-right border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-800 text-sm font-bold border-b border-slate-200">
+                                <th class="p-4">רכיב במטלת הביצוע</th>
+                                <th class="p-4">פירוט ודרישות</th>
+                                <th class="p-4 w-32 text-center">ניקוד מירבי</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm text-slate-700 divide-y divide-slate-100">
+                            <tr>
+                                <td class="p-4 font-bold text-indigo-700">5 תוצרי המיני-פרויקט</td>
+                                <td class="p-4">14 נקודות לכל תוצר (הצגה נקייה, תיעוד כלים, צילומי מסך, קישור דרייב)</td>
+                                <td class="p-4 font-extrabold text-center text-indigo-600 text-base">70 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">חלק המבוא</td>
+                                <td class="p-4">הקדמה, רקע, מטרות וחשיבות, תיאור מבנה העבודה</td>
+                                <td class="p-4 font-extrabold text-center text-base">8 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">סיכום ורפלקציה</td>
+                                <td class="p-4">רפלקציה אישית על הלמידה והחוויה בשנה זו</td>
+                                <td class="p-4 font-extrabold text-center text-base">6 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">ביבליוגרפיה ומקורות</td>
+                                <td class="p-4">רשימת קישורים, מחוללי AI, הדרכות ואתרי תמונות</td>
+                                <td class="p-4 font-extrabold text-center text-base">6 נקודות</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 font-bold">התרשמות כללית</td>
+                                <td class="p-4">עיצוב המצגת, יצירתיות, שמירה על פרופורציות ואסתטיקה</td>
+                                <td class="p-4 font-extrabold text-center text-base">10 נקודות</td>
+                            </tr>
+                            <tr class="bg-purple-50/60 font-bold text-purple-900">
+                                <td class="p-4">בונוס: תיק עבודות</td>
+                                <td class="p-4">6 עבודות איכותיות נוספות מהשנה בליווי תיעוד מלא</td>
+                                <td class="p-4 font-extrabold text-center text-purple-600 text-base">+20% בונוס</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FLOATING BOT ASSISTANT FAB -->
+    <a href="https://gemini.google.com/gem/182jqjh6fxGeiMJ3R2si6dovgXIugR93N?usp=sharing" 
+       target="_blank" rel="noopener noreferrer"
+       style="z-index: 999999 !important;"
+       class="bot-fab group fixed bottom-6 left-6 sm:left-10 inline-flex items-center justify-center p-0.5 overflow-visible text-sm font-bold rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 hover:text-white transition-all duration-300 shadow-2xl transform hover:scale-105">
+       
+       <span class="relative pr-5 pl-14 sm:pl-16 py-3.5 transition-all ease-in duration-75 bg-slate-900 rounded-xl text-white flex items-center gap-3 shadow-sm font-black text-sm sm:text-base">
+         
+         <!-- AVATAR CIRCLE -->
+         <span class="absolute -left-6 top-1/2 -translate-y-1/2 block w-14 h-14 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-xl border-2 border-white z-[1000000] transition duration-300 transform group-hover:scale-110">
+            <img src="https://lh3.googleusercontent.com/d/1fzqv93VKIW_VT8-e1HdJxBmbU2sFnwlb" alt="טוביה הבוט" class="w-full h-full object-cover">
+         </span>
+
+         <!-- TEXT CONTAINER -->
+         <span class="text-right leading-tight block mr-1">
+           <span class="block text-white font-extrabold text-base">שואלים את טוביה הבוט 🤖</span>
+           <span class="block text-xs font-medium text-indigo-200">עזרה במטלת הביצוע ב-Gemini</span>
+         </span>
+         
+       </span>
+    </a>
+
+    <!-- SCRIPT FOR DYNAMIC FUNCTIONALITY AND LOCAL STORAGE SAVE -->
+    <script>
+        const STORAGE_KEY_DRIVE = 'student_drive_url_task791283';
+        const STORAGE_KEY_PROGRESS = 'student_task_progress_791283';
+        const STORAGE_KEY_TOPIC = 'student_selected_topic_791283';
+
+        // 11 TOPICS FROM EXCEL
+        const TOPICS_DATA = [
+            {
+                id: 1,
+                icon: "📺",
+                title: "ערוץ טלוויזיה (ערוץ 17)",
+                products: ["לוגו הערוץ", "שינוי לוגו חגיגי לרגל חג", "תחזית מזג אוויר (עננים/שמש)", "לוח שידורים שבועי", "הודעת מעבר לפרסומות"]
+            },
+            {
+                id: 2,
+                icon: "🖼️",
+                title: "פוסטרים בנושא חברתי/סביבתי",
+                products: ["פוסטר ראשי למאבק בחרם", "כרזה נגד גזענות בחברה", "פוסטר בנושא מודעות למחזור", "כרזת לעידוד אימוץ חיות", "גלויה הסברתית עם טיפים"]
+            },
+            {
+                id: 3,
+                icon: "⚽",
+                title: "ליגת העל בכדורגל",
+                products: ["לוגו הליגה", "לוח משחקי פתיחה", "הודעה על משחק העונה", "נייר מכתבים רשמי", "הודעה על מצטיין הליגה"]
+            },
+            {
+                id: 4,
+                icon: "🎉",
+                title: "ברכות וגלויות לחגים",
+                products: ["ברכה לראש השנה", "גלויה לפורים", "כרטיס ברכה לפסח", "גלויה ליום העצמאות", "ברכה לחנוכה"]
+            },
+            {
+                id: 5,
+                icon: "📱",
+                title: "ממשק אפליקציה לנייד (UX/UI)",
+                products: ["מסך פתיחה (Splash Screen)", "מסך הרשמה/התחברות", "מסך בית מרכזי", "מסך פרופיל משתמש", "מסך הגדרות/חיפוש"]
+            },
+            {
+                id: 6,
+                icon: "🐉",
+                title: "סדרת דמויות/פוטומניפולציות",
+                products: ["חיית פנטזיה 1 (מיזוג)", "חיית פנטזיה 2 (מיזוג)", "חיית פנטזיה 3 (מיזוג)", "דמות פנטזיה 4", "דמות פנטזיה 5"]
+            },
+            {
+                id: 7,
+                icon: "📐",
+                title: "סדרת אלמנטים בתלת-ממד",
+                products: ["סדרת מאכלים ב-3D", "אובייקטים גיאומטריים", "טקסטים בתלת-ממד", "סדרת פירות/ירקות ב-3D", "לוגו מותג בתלת-ממד"]
+            },
+            {
+                id: 8,
+                icon: "🎸",
+                title: "להקת מוזיקה/זמר",
+                products: ["לוגו המותג/הלהקה", "כריכה לאלבום מוזיקה", "פוסטר להופעה חיה", "עיצוב חולצה/מרצ'נדייז", "כרטיס כניסה להופעה"]
+            },
+            {
+                id: 9,
+                icon: "🎨",
+                title: "סדרת איורים דיגיטליים וקריקטורות",
+                products: ["איור דמות מוכרת 1", "איור דמות מוכרת 2", "איור דמות מוכרת 3", "קריקטורה של אישיות", "איור סצנה מלאה"]
+            },
+            {
+                id: 10,
+                icon: "🎒",
+                title: "ערכת חזרה לבית הספר",
+                products: ["דף מערכת שעות מעוצב", "עטיפה למחברת", "מדבקות שם לספרים", "לוח שנה חודשי", "יומן תלמיד מעוצב"]
+            },
+            {
+                id: 11,
+                icon: "🌀",
+                title: "סדרת רקעים רפטיטיביים ומנדלות",
+                products: ["רקע דמוי מנדלה 1", "טפט רפטיטיבי לבדים", "רקע רפטיטיבי לנייד", "דפוס גיאומטרי מורכב", "רקע מופשט מעוצב"]
+            }
+        ];
+
+        // Init Topics Dropdown & Cards Grid
+        function initTopicsUI() {
+            const selector = document.getElementById('topicSelector');
+            const grid = document.getElementById('topicsGrid');
+
+            let optionsHtml = '<option value="">-- בחר נושא מהרשימה --</option>';
+            let cardsHtml = '';
+
+            TOPICS_DATA.forEach(topic => {
+                optionsHtml += `<option value="${topic.id}">${topic.id}. ${topic.title}</option>`;
+
+                cardsHtml += `
+                    <div class="p-5 rounded-2xl border border-slate-200 bg-slate-50/70 hover:bg-white hover:border-indigo-300 hover:shadow-md transition-all flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="text-2xl">${topic.icon}</span>
+                                <h4 class="font-bold text-lg text-slate-900">${topic.id}. ${topic.title}</h4>
+                            </div>
+                            <p class="text-sm font-semibold text-indigo-700 mb-2">5 התוצרים בנושא זה:</p>
+                            <ul class="text-sm text-slate-700 space-y-1.5 mb-4 list-disc list-inside">
+                                ${topic.products.map(p => `<li>${p}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <button onclick="selectTopicById(${topic.id})" class="w-full mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm py-2.5 rounded-xl transition-all shadow-sm">
+                            בחר נושא זה למטלה ✨
+                        </button>
+                    </div>
+                `;
+            });
+
+            optionsHtml += `<option value="custom">✨ נושא מותאם אישית (הקלדה חופשית)</option>`;
+            selector.innerHTML = optionsHtml;
+            grid.innerHTML = cardsHtml;
+
+            // Load saved topic selection
+            const savedTopicId = localStorage.getItem(STORAGE_KEY_TOPIC);
+            if (savedTopicId) {
+                selector.value = savedTopicId;
+                updateTopicDisplay(savedTopicId);
+            }
+        }
+
+        function onTopicSelectChange() {
+            const val = document.getElementById('topicSelector').value;
+            updateTopicDisplay(val);
+        }
+
+        function updateTopicDisplay(topicId) {
+            const infoBox = document.getElementById('selectedTopicInfo');
+            const titleEl = document.getElementById('currentTopicTitle');
+            const prodsEl = document.getElementById('currentTopicProducts');
+
+            if (!topicId) {
+                infoBox.classList.add('hidden');
+                return;
+            }
+
+            const topic = TOPICS_DATA.find(t => t.id == topicId);
+            infoBox.classList.remove('hidden');
+
+            if (topic) {
+                titleEl.innerText = `${topic.icon} ${topic.title}`;
+                prodsEl.innerHTML = topic.products.map(p => `<span class="bg-indigo-800/80 text-indigo-100 px-3 py-1 rounded-md border border-indigo-600/50">✦ ${p}</span>`).join('');
+            } else if (topicId === 'custom') {
+                titleEl.innerText = "✨ נושא מותאם אישית (הגדרה חופשית בשדות למטה)";
+                prodsEl.innerHTML = '<span class="text-slate-300">ניתן לכתוב ישירות את שמות התוצרים בטבלה למטה</span>';
+            }
+        }
+
+        function selectTopicById(topicId) {
+            document.getElementById('topicSelector').value = topicId;
+            applySelectedTopic();
+            switchTab('checklists');
+            window.scrollTo({ top: 400, behavior: 'smooth' });
+        }
+
+        function applySelectedTopic() {
+            const topicId = document.getElementById('topicSelector').value;
+            if (!topicId) {
+                alert('נא לבחור נושא מתוך הרשימה!');
+                return;
+            }
+
+            localStorage.setItem(STORAGE_KEY_TOPIC, topicId);
+            updateTopicDisplay(topicId);
+
+            const topic = TOPICS_DATA.find(t => t.id == topicId);
+            if (topic) {
+                const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY_PROGRESS) || '{}');
+                topic.products.forEach((prodName, idx) => {
+                    const itemNum = idx + 1;
+                    savedData[`mini_${itemNum}_name`] = prodName;
+                    const input = document.getElementById(`input_mini_${itemNum}_name`);
+                    if (input) input.value = prodName;
+                });
+                localStorage.setItem(STORAGE_KEY_PROGRESS, JSON.stringify(savedData));
+                calculateStats();
+                alert(`הנושא "${topic.title}" עודכן בהצלחה! 5 התוצרים אוכלסו בטבלת המעקב. 🎉`);
+            }
+        }
+
+        // Load Saved Drive URL
+        function initDriveUrl() {
+            const savedUrl = localStorage.getItem(STORAGE_KEY_DRIVE);
+            const input = document.getElementById('driveUrlInput');
+            const btn = document.getElementById('openDriveBtn');
+            if (savedUrl) {
+                input.value = savedUrl;
+                btn.href = savedUrl;
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+            }
+        }
+
+        function saveDriveUrl() {
+            const input = document.getElementById('driveUrlInput');
+            const url = input.value.trim();
+            const btn = document.getElementById('openDriveBtn');
+            if (url) {
+                localStorage.setItem(STORAGE_KEY_DRIVE, url);
+                btn.href = url;
+                btn.classList.remove('hidden');
+                btn.classList.add('flex');
+                alert('הקישור לתיקיית הגוגל דרייב שמור בהצלחה במחשב זה! 🎉');
+            } else {
+                localStorage.removeItem(STORAGE_KEY_DRIVE);
+                btn.classList.add('hidden');
+                btn.classList.remove('flex');
+            }
+        }
+
+        // Render Checklists Dynamically
+        function renderChecklists() {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY_PROGRESS) || '{}');
+
+            // Render 5 Mini Project Items
+            const miniContainer = document.getElementById('miniProjectList');
+            let miniHtml = '';
+            for (let i = 1; i <= 5; i++) {
+                const checkedFinal = savedData[`mini_${i}_final`] ? 'checked' : '';
+                const checkedDoc = savedData[`mini_${i}_doc`] ? 'checked' : '';
+                const checkedDrive = savedData[`mini_${i}_drive`] ? 'checked' : '';
+
+                miniHtml += `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 hover:bg-slate-50 transition-colors">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                            <div class="flex items-center gap-2">
+                                <span class="w-7 h-7 rounded-md bg-indigo-600 text-white font-bold text-sm flex items-center justify-center">${i}</span>
+                                <h4 class="font-bold text-base text-slate-900">תוצר ${i} במיני-פרויקט</h4>
+                            </div>
+                            <input type="text" placeholder="שם/תיאור התוצר (למשל: כרזה בנושא סביבה)" 
+                                   id="input_mini_${i}_name" value="${savedData[`mini_${i}_name`] || ''}"
+                                   onchange="saveProgress()"
+                                   class="text-sm px-3.5 py-2 rounded-lg border border-slate-300 w-full sm:w-80 bg-white font-medium">
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2 border-t border-slate-200/60 text-sm">
+                            <label class="flex items-center gap-2 cursor-pointer font-medium text-slate-700">
+                                <input type="checkbox" id="mini_${i}_final" ${checkedFinal} onchange="saveProgress()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>שקף תוצר סופי + חומרי גלם</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-medium text-slate-700">
+                                <input type="checkbox" id="mini_${i}_doc" ${checkedDoc} onchange="saveProgress()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>שקף תיעוד כלים וצילומי מסך</span>
+                            </label>
+                            <label class="flex items-center gap-2 cursor-pointer font-medium text-slate-700">
+                                <input type="checkbox" id="mini_${i}_drive" ${checkedDrive} onchange="saveProgress()" class="w-4 h-4 rounded text-indigo-600 focus:ring-indigo-500">
+                                <span>קובץ פתוח שמור בדרייב</span>
+                            </label>
+                        </div>
+                    </div>
+                `;
+            }
+            miniContainer.innerHTML = miniHtml;
+
+            // Render 6 Portfolio Items
+            const portContainer = document.getElementById('portfolioList');
+            let portHtml = '';
+            for (let i = 1; i <= 6; i++) {
+                const checked = savedData[`port_${i}`] ? 'checked' : '';
+                portHtml += `
+                    <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2.5 w-full">
+                            <input type="checkbox" id="port_${i}" ${checked} onchange="saveProgress()" class="w-4 h-4 rounded text-purple-600 focus:ring-purple-500">
+                            <span class="text-sm font-bold text-slate-800 shrink-0">עבודה ${i}:</span>
+                            <input type="text" placeholder="שם העבודה מהכיתה..." 
+                                   id="input_port_${i}_name" value="${savedData[`port_${i}_name`] || ''}"
+                                   onchange="saveProgress()"
+                                   class="text-sm px-3 py-1.5 rounded-lg border border-slate-300 w-full bg-white">
+                        </div>
+                    </div>
+                `;
+            }
+            portContainer.innerHTML = portHtml;
+
+            calculateStats();
+        }
+
+        function saveProgress() {
+            const data = {};
+            // Mini project inputs
+            for (let i = 1; i <= 5; i++) {
+                data[`mini_${i}_name`] = document.getElementById(`input_mini_${i}_name`).value;
+                data[`mini_${i}_final`] = document.getElementById(`mini_${i}_final`).checked;
+                data[`mini_${i}_doc`] = document.getElementById(`mini_${i}_doc`).checked;
+                data[`mini_${i}_drive`] = document.getElementById(`mini_${i}_drive`).checked;
+            }
+            // Portfolio inputs
+            for (let i = 1; i <= 6; i++) {
+                data[`port_${i}_name`] = document.getElementById(`input_port_${i}_name`).value;
+                data[`port_${i}`] = document.getElementById(`port_${i}`).checked;
+            }
+
+            localStorage.setItem(STORAGE_KEY_PROGRESS, JSON.stringify(data));
+            calculateStats();
+        }
+
+        function calculateStats() {
+            const savedData = JSON.parse(localStorage.getItem(STORAGE_KEY_PROGRESS) || '{}');
+            
+            // Mini project items check
+            let miniDone = 0;
+            for (let i = 1; i <= 5; i++) {
+                if (savedData[`mini_${i}_final`] && savedData[`mini_${i}_doc`] && savedData[`mini_${i}_drive`]) {
+                    miniDone++;
+                }
+            }
+            document.getElementById('miniProjectCount').innerText = `${miniDone} / 5`;
+
+            // Portfolio items check
+            let portDone = 0;
+            for (let i = 1; i <= 6; i++) {
+                if (savedData[`port_${i}`]) {
+                    portDone++;
+                }
+            }
+            document.getElementById('portfolioCount').innerText = `${portDone} / 6`;
+
+            // Overall percent based on 5 mini project items (each 20%)
+            const totalPercent = Math.round((miniDone / 5) * 100);
+            document.getElementById('overallPercent').innerText = `${totalPercent}%`;
+            document.getElementById('overallProgressBar').style.width = `${totalPercent}%`;
+        }
+
+        // Tab Switching
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+                btn.classList.add('bg-white', 'text-slate-700');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            document.getElementById(`tab-${tabName}`).classList.remove('bg-white', 'text-slate-700');
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+        }
+
+        // Initialize on page load
+        window.onload = function() {
+            initDriveUrl();
+            renderChecklists();
+            initTopicsUI();
+        };
+    </script>
 </body>
 </html>
